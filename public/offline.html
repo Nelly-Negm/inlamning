@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!--
+    när man är offline
+   -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+  <title>React App</title>
+
+  <style>
+    body {
+
+      background-color: #2A2E30;
+    }
+
+    .imgHolder {
+      display: flex;
+
+    }
+
+    /* själva bilderna */
+    img {
+      object-fit: fill;
+      width: 163px;
+      height: 139px;
+
+
+    }
+
+    /* varje liste-element */
+    .imgViewers li {
+      width: 163px;
+      height: 139px;
+      position: relative;
+
+    }
+
+    /*listan/container på list elelemnt */
+    .imgViewers {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      list-style-type: none;
+      padding: 0%;
+      margin: 0% !important;
+      gap: 16px;
+
+    }
+
+
+
+    /* delite btn ovs*/
+    .delitebtn {
+
+      width: 24px;
+      height: 24px;
+      top: 30px;
+
+      background-color: rgba(255, 255, 255, 0.6);
+      border-radius: 20px;
+      color: black;
+      margin-right: 0%;
+      float: right;
+
+    }
+    ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #FFFF;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: grey;
+}
+  </style>
+
+</head>
+
+<body>
+  <div class="imgHolder">
+
+
+    <ul id="imgViewer" class="imgViewers"></ul>
+  </div>
+
+</body>
+
+<script>
+  //samma som i online men så det går offline
+  function getLocaldata() {
+    let localData = localStorage.getItem('imgs');
+    let imageArray = [];
+
+    if (localData != null) {
+      imageArray = JSON.parse(localData);
+    }
+    return (imageArray);
+  };
+  function showLocalData() {
+    let UL = document.getElementById("imgViewer");
+    let imageArray = getLocaldata();
+    UL.innerHTML = "";
+    for (let i = 0; i < imageArray.length; i++) {
+      let image = imageArray[i];
+
+      let LI = document.createElement('li');
+      let img = document.createElement('img');
+      let button = document.createElement('button')
+
+      img.className += 'imgeges';
+      button.className += 'delitebtn';
+
+      button.addEventListener('click', function () {
+        deliteLocalAt(i)
+        console.log('deliteLocalAt')
+      });
+      img.src = image;
+      button.innerHTML = "x";
+      LI.appendChild(button);
+      LI.appendChild(img);
+      UL.appendChild(LI);
+
+
+    };
+  };
+  function deliteLocalAt(index) {
+    let imageArray = getLocaldata();
+    imageArray.splice(index, 1);
+    localStorage.setItem('imgs', JSON.stringify(imageArray));
+
+    showLocalData();
+  };
+
+  /*   let ul=document.getElementById('imgViewer');
+ let itemes = JSON.parse(localStorage.getItem('imgs'))
+ itemes.forEach(iteme => {
+     let li = document.createElement('li') 
+     let image = document.createElement('img')
+     image.src = iteme 
+     li.appendChild(image) 
+     ul.appendChild(li)
+ })*/
+  showLocalData()
+
+</script>
+
+</html>

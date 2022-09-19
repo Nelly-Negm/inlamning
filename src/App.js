@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{Component} from "react";
+import  ReactDOM  from "react-dom";
+import CameriaView from './camera';
+import GalleryView  from './gallery';
+import  NavBar from './nav';
+import { BrowserRouter as Router, Routes, Route  } from "react-router-dom";
+
+const VideoStream = React.createRef(null);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    return (
+    <div>
+    <Router>
+        <NavBar></NavBar>
+        <Routes>
+            <Route path="/" element={<CameriaView></CameriaView> }></Route>
+            <Route path="/gall"element={<GalleryView ></GalleryView>}></Route>
+        </Routes>
+        
+    </Router>
+     </div>
+    );
+
+};
+
 
 export default App;
